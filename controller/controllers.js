@@ -1,5 +1,5 @@
 const { validateUser } = require('../middleware/middleware')
-const {addUserDB, getUserDB, getOneUserDB} = require('../repo/repos')
+const {addUserDB, getUserDB, getOneUserDB, getAllUsersDB} = require('../repo/repos')
 
 const addUser = async (req,res)=>{
     if(!req.body?.username && !req.body?.usermail && !req.body?.userpassword) return "All Fields are mandatory"
@@ -15,6 +15,11 @@ const getUser = async (req,res)=>{
     return await res.send({data:result})
 }
 
+const getAllUsers = async (req,res)=>{
+    let result = await getAllUsersDB()
+    return await res.send({data:result})
+}
+
 const getOneUser = async (req,res)=>{
     const id = req.params.userId
     let result = await getOneUserDB(id)
@@ -23,4 +28,4 @@ const getOneUser = async (req,res)=>{
     return await res.send({data:result})
 }
 
-module.exports = {addUser,getUser,getOneUser}
+module.exports = {addUser,getUser,getOneUser,getAllUsers}

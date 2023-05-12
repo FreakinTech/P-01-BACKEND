@@ -11,13 +11,19 @@ const addUserDB = ({username,usermail,userpassword}) => {
 };
 
 const getUserDB = async (email,password) => {
-  let users = await userModel.find({usermail:email,userpassword:password});
-  return users;
+  let user = await userModel.find({usermail:email,userpassword:password});
+  return user;
 };
+
+
+const getAllUsersDB = async () =>{
+  let users = await userModel.find();
+  return users;
+}
 
 const getOneUserDB = async (id)=>{
    let query = await userModel.findOne({_id:id})
    return query
 }
 
-module.exports = { addUserDB, getUserDB,getOneUserDB };
+module.exports = { addUserDB, getUserDB,getOneUserDB,getAllUsersDB };

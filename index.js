@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const {Server} = require('socket.io')
 const mongoose = require('mongoose') ;
 const usersRouter = require('./router/routes');
+const { getOneUserDB } = require('./repo/repos');
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -13,23 +14,36 @@ app.use(bodyParser.json())
 const server = http.createServer(app)
 const io = new Server(server,{
     cors:{
-        origin:"http://localhost:3001",
-        methods:["GET","POST"]
+        origin:"*",
     },
 });
 
-io.on("connection",(socket)=>{
-    console.log(socket.id);
+let users = {}
 
-    socket.on("send_message",(data)=>{
-        console.log(data)
-        socket.emit("recieve_message",data)
+io.on("connection",(socket)=>{
+
+    socket.on('connected',(userId)=>{
+        users[userId] = socket.id ;
     })
+    console.log(socket.id);
+    // users[userId] = socket.id
+
+    socket.on("send_message",async (data)=>{
+        console.log("sender",data)
+       
+        let reciever = await getOneUserDB(data.msg.userId)
+        console.log("reciever",reciever)
+        // if(sender.length > 0) 
+        data.type = "incoming"
+        io.to(users[reciever._id]).emit("recieve_message",data)                                         
+        console.log("users",users)
+    })
+
 
     socket.on("disconnect",() =>{
         console.log(socket.id,"user disconnected")
     })
-})  
+})
 
 mongoose.connect('mongodb://0.0.0.0:27017/freaktech')
 
