@@ -21,8 +21,8 @@ const getAllUsersDB = async () =>{
   return users;
 }
 
-const getOneUserDB = async (id)=>{
-   let query = await userModel.findOne({_id:id})
+const getOneUserDB = async (mail)=>{
+   let query = await userModel.findOne({usermail:mail})
    return query
 }
 
