@@ -46,8 +46,9 @@ io.on("connection",(socket)=>{
 })
 
 // mongoose.connect('mongodb://0.0.0.0:27017/freaktech')
+mongoose.connect('mongodb+srv://freaktechs:techfreaks@freakintech.to9ugdj.mongodb.net/?retryWrites=true&w=majority') 
 
-// mongoose.connection.on('open',()=>{console.log('connected to mongoDB')})
+mongoose.connection.on('open',()=>{console.log('connected to mongoDB')})
 
 app.use(usersRouter)
 
