@@ -26,4 +26,9 @@ const getOneUserDB = async (mail)=>{
    return query
 }
 
-module.exports = { addUserDB, getUserDB,getOneUserDB,getAllUsersDB };
+const getOneUserById = async (id)=>{
+  let query = await userModel.findOne({_id:id})
+  return query
+}
+
+module.exports = { addUserDB, getUserDB,getOneUserDB,getOneUserById,getAllUsersDB };

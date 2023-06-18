@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const {Server} = require('socket.io')
 const mongoose = require('mongoose') ;
 const usersRouter = require('./router/routes');
-const { getOneUserDB } = require('./repo/repos');
+const { getOneUserById } = require('./repo/repos');
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -31,7 +31,7 @@ io.on("connection",(socket)=>{
     socket.on("send_message",async (data)=>{
         console.log("sender",data)
        
-        let reciever = await getOneUserDB(data.msg.userId)
+        let reciever = await getOneUserById(data.msg.userId)
         console.log("reciever",reciever)
         // if(sender.length > 0) 
         data.type = "incoming"
