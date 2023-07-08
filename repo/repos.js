@@ -1,13 +1,12 @@
 const userModel = require("../schema/users");
 
-const addUserDB = ({username,usermail,userpassword}) => {
+const addUserDB = async ({username,usermail,userpassword}) => {
   let store = new userModel({
       username: username,
       usermail: usermail,
       userpassword: userpassword,
   });
-  store.save();
-  return 
+  return await store.save();
 };
 
 const getUserDB = async (email,password) => {

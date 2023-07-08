@@ -12,18 +12,20 @@ const addUser = async (req, res) => {
       return "All Fields are mandatory";
     const { username, usermail, userpassword } = req.body;
     await addUserDB({ username, usermail, userpassword });
-    return await res.send("User Added");
+    res.send("User Added");
   } catch (err) {
+    console.error(err)
     return await res.send(err);
   }
 };
 
-const getUser = async (req, res) => {
+const getUser = async (req, res) => { 
   try {
-    let { email, password } = req.params;
+    let { email, password } = req.body;
     let result = await getUserDB(email, password);
     return await res.send({ data: result });
   } catch (err) {
+    console.error(err)
     res.status(500).send(err);
   }
 };

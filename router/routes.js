@@ -3,9 +3,9 @@ const {addUser, getUser, getOneUser, getAllUsers} = require("../controller/contr
 const { validateUser } = require("../middleware/middleware")
 const router = express.Router()
 
-router.post('/user',validateUser,addUser)
+router.post('/user',addUser)
 router.get('/user',getAllUsers)
-router.get('/user/:email/:password',getUser)
+router.post('/user/auth',getUser)
 router.get('/user/:userId',getOneUser)
 
 module.exports = router
